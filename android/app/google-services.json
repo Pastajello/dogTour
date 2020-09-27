@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "4275442267",
+    "firebase_url": "https://dogtour-c53b0.firebaseio.com",
+    "project_id": "dogtour-c53b0",
+    "storage_bucket": "dogtour-c53b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4275442267:android:1cc063144d73b7cb64a57e",
+        "android_client_info": {
+          "package_name": "com.dogtour_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4275442267-beun50p6t2323smi5dd4dcjej8f6p4up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGNNOfq1ttYrFIrXzlKKj3pStF9ZaOldc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4275442267-beun50p6t2323smi5dd4dcjej8f6p4up.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
