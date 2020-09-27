@@ -12,24 +12,29 @@ class AddPetView extends StatelessWidget {
     return ViewModelBuilder<AddPetViewModel>.reactive(
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(),
-            body: Container(
-                color: Colors.white,
-                child: Column(children: [
-                  FlatButton(
-                    child: Text("pick file"),
-                    onPressed: model.chooseFile,
-                  ),
-                  Image.file(File(model.image.path)),
-                  FlatButton(
-                    child: Text("upload file"),
-                    onPressed: model.uploadFile,
-                  ),
-                  Image.network(model.uploadedFileURL),
-                  FlatButton(
-                    child: Text("add doggo"),
-                    onPressed: model.addSomeAnimal,
-                  ),
-                ]))),
+            body: SingleChildScrollView(
+              child: Container(
+                  color: Colors.white,
+                  child: Column(children: [
+                    FlatButton(
+                      child: Text("pick file"),
+                      onPressed: model.chooseFile,
+                    ),
+                    if (model.image?.path != null)
+                      Image.file(File(model.image.path)),
+                    FlatButton(
+                      child: Text("upload file"),
+                      onPressed: model.uploadFile,
+                    ),
+                    if (model.uploadedFileURL != null)
+                      Image.network(model.uploadedFileURL),
+                    FlatButton(
+                      child: Text("add doggo"),
+                      onPressed: model.addSomeAnimal,
+                    ),
+                    if (model.doggoAdded) Icon(Icons.approval)
+                  ])),
+            )),
         onModelReady: (model) async {
           await model.init(context);
         },

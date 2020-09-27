@@ -25,6 +25,7 @@ class DashboardView extends StatelessWidget {
               backgroundColor: R.colors.main,
             ),
             body: Container()),
+        onModelReady: (model) async => await model.init(),
         viewModelBuilder: () => DashboardViewModel());
   }
 }

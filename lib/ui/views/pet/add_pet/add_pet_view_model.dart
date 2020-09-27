@@ -18,6 +18,7 @@ class AddPetViewModel extends BaseViewModel {
 
   PickedFile image;
   String uploadedFileURL;
+  bool doggoAdded = false;
 
   Future<void> init(BuildContext context) async {}
 
@@ -50,6 +51,7 @@ class AddPetViewModel extends BaseViewModel {
           tags: ["piesel", "brazowy"]));
       notifyListeners();
       print('udalo sie');
+      doggoAdded = true;
     } catch (e) {
       print(e.toString());
     }
