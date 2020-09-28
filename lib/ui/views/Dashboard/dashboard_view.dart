@@ -13,7 +13,7 @@ class DashboardView extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                   onPressed: () async {
-                    await model.addPet();
+                    await model.navigateToAddPet();
                   },
                   icon: Icon(
                     Icons.settings,
@@ -24,7 +24,26 @@ class DashboardView extends StatelessWidget {
               ],
               backgroundColor: R.colors.main,
             ),
-            body: Container()),
+            body: Container(
+                color: Colors.white,
+                child: RefreshIndicator(
+                  onRefresh: () async => await model.getPets(),
+                  child: ListView.builder(
+                    itemCount: model.pets.length,
+                    itemBuilder: (context, index) {
+                      var pet = model.pets[index];
+                      return InkWell(
+                        onTap: () async => await model.navigateToPetDetais(pet),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(pet.name),
+                            leading: Image.network(pet.profilePicUrl),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ))),
         onModelReady: (model) async => await model.init(),
         viewModelBuilder: () => DashboardViewModel());
   }

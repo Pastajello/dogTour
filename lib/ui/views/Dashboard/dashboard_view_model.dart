@@ -11,21 +11,29 @@ class DashboardViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 
-  Future navigateToPlaces() async {
-    //await _navigationservice.navigateTo(Routes.loginView);
-  }
+  List<Pet> pets = [];
 
-  Future addPet() async {
+  Future navigateToAddPet() async {
     await _navigationservice.navigateTo(Routes.addPetView);
   }
 
   Future init() async {
-    var a = await Firestore.instance.collection("pets").getDocuments();
-    var aasd = a.documents.map((e) {
-      //var json = jsonDecode();
+    await getPets();
+  }
+
+  Future navigateToPetDetais(Pet pet) async {
+    await _navigationservice.navigateTo(Routes.petDetailsView, arguments: pet);
+  }
+
+  Future getPets() async {
+    var petCollection =
+        await Firestore.instance.collection("pets").getDocuments();
+    pets = petCollection.documents
+        .where((element) => element.data["name"] != "")
+        .map((e) {
       var pet = Pet.fromJson(e.data);
       return pet;
     }).toList();
-    int i = 5;
+    notifyListeners();
   }
 }
