@@ -19,7 +19,7 @@ class StartupViewModel extends BaseViewModel {
   Future initialize() async {
     await Future.delayed(Duration(seconds: 2));
 
-    var userInfo = FirebaseAuth.instance.currentUser();
+    var userInfo = await FirebaseAuth.instance.currentUser();
     if (userInfo != null) {
       await _navigationservice.replaceWith(Routes.dashboardView);
     } else {
