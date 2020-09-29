@@ -16,7 +16,7 @@ class DashboardView extends StatelessWidget {
                     await model.navigateToAddPet();
                   },
                   icon: Icon(
-                    Icons.settings,
+                    Icons.add,
                     size: 40,
                   ),
                   color: Colors.black,
@@ -35,6 +35,7 @@ class DashboardView extends StatelessWidget {
                       return InkWell(
                         onTap: () async => await model.navigateToPetDetais(pet),
                         child: Card(
+                          color: Colors.white,
                           child: ListTile(
                             title: Text(pet.name),
                             leading: Image.network(pet.profilePicUrl),

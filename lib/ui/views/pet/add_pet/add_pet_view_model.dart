@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:path/path.dart' as Path;
@@ -19,6 +20,10 @@ class AddPetViewModel extends BaseViewModel {
   PickedFile image;
   String uploadedFileURL;
   bool doggoAdded = false;
+
+  String petName;
+
+  String petDescription;
 
   Future<void> init(BuildContext context) async {}
 
@@ -35,23 +40,20 @@ class AddPetViewModel extends BaseViewModel {
         .child('pets/${Path.basename(image.path)}}');
     StorageUploadTask uploadTask = storageReference.putFile(File(image.path));
     await uploadTask.onComplete;
-    print('File Uploaded');
-    storageReference.getDownloadURL().then((fileURL) {
-      uploadedFileURL = fileURL;
-      notifyListeners();
-    });
+    var profilePicUrl = await storageReference.getDownloadURL();
+    return profilePicUrl;
   }
 
   Future addSomeAnimal() async {
     try {
+      var profilePicUrl = await uploadFile();
       await addAnimal(Pet(
-          name: "piesel",
-          description: "zwykly piesel, ma 4 nogi",
-          profilePicUrl: uploadedFileURL,
+          name: petName,
+          description: petDescription,
+          profilePicUrl: profilePicUrl,
           tags: ["piesel", "brazowy"]));
       notifyListeners();
-      print('udalo sie');
-      doggoAdded = true;
+      _navigationservice.back();
     } catch (e) {
       print(e.toString());
     }
@@ -61,5 +63,13 @@ class AddPetViewModel extends BaseViewModel {
     CollectionReference collection = Firestore.instance.collection('pets');
 
     await collection.add(animal.toJson());
+  }
+
+  Future<void> selectPetPictures() async {
+    var resultList = await MultiImagePicker.pickImages(
+      maxImages: 300,
+      enableCamera: true,
+    );
+    int i = 5;
   }
 }

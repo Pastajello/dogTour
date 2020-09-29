@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: ^0.13.4+2
   firebase_storage: ^3.0.3   
   image_picker: ^0.6.0+17    
+  multi_image_picker: ^4.7.14
   stacked: ^1.7.6
   auto_route: ^0.6.6
   google_fonts: ^1.1.0

@@ -31,9 +31,14 @@ class DashboardViewModel extends BaseViewModel {
     pets = petCollection.documents
         .where((element) => element.data["name"] != "")
         .map((e) {
-      var pet = Pet.fromJson(e.data);
-      return pet;
+      try {
+        var pet = Pet.fromJson(e.data);
+        return pet;
+      } catch (e) {
+        return null;
+      }
     }).toList();
+    pets.removeWhere((element) => element.name == null);
     notifyListeners();
   }
 }
