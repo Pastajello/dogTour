@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 import 'add_pet_view_model.dart';
@@ -51,6 +52,26 @@ class AddPetView extends StatelessWidget {
                     child: Text("add pet pictures"),
                     onPressed: model.selectPetPictures,
                   ),
+                  if (model.images != null)
+                    Container(
+                      height: 120,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: model.images.length,
+                        itemBuilder: (context, index) {
+                          var pic = model.images[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: AssetThumb(
+                              asset: pic,
+                              width: 100,
+                              height: 100,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   MaterialButton(
                     child: Text("add pet"),
                     onPressed: model.addSomeAnimal,

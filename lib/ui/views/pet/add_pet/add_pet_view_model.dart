@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/app/locator.dart';
@@ -18,11 +19,9 @@ class AddPetViewModel extends BaseViewModel {
   final DialogService _dialogService = locator<DialogService>();
 
   PickedFile image;
-  String uploadedFileURL;
-  bool doggoAdded = false;
-
+  List<Asset> images;
+  bool uploading = false;
   String petName;
-
   String petDescription;
 
   Future<void> init(BuildContext context) async {}
@@ -37,26 +36,46 @@ class AddPetViewModel extends BaseViewModel {
   Future uploadFile() async {
     StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('pets/${Path.basename(image.path)}}');
+        .child('pets/${Path.basename(image.path)}');
     StorageUploadTask uploadTask = storageReference.putFile(File(image.path));
     await uploadTask.onComplete;
     var profilePicUrl = await storageReference.getDownloadURL();
     return profilePicUrl;
   }
 
+  Future saveImage(Asset asset) async {
+    ByteData byteData =
+        await asset.getByteData(); // requestOriginal is being deprecated
+    List<int> imageData = byteData.buffer.asUint8List();
+    StorageReference ref = FirebaseStorage().ref().child(
+        "some_image_bame.jpg"); // To be aligned with the latest firebase API(4.0)
+    StorageUploadTask uploadTask = ref.putData(imageData);
+
+    return await (await uploadTask.onComplete).ref.getDownloadURL();
+  }
+
   Future addSomeAnimal() async {
     try {
+      uploading = true;
+      notifyListeners();
       var profilePicUrl = await uploadFile();
+      var pics = List<String>();
+      for (var pic in images) {
+        pics.add(await saveImage(pic));
+      }
       await addAnimal(Pet(
           name: petName,
           description: petDescription,
           profilePicUrl: profilePicUrl,
+          picsUrl: pics,
           tags: ["piesel", "brazowy"]));
       notifyListeners();
       _navigationservice.back();
     } catch (e) {
       print(e.toString());
     }
+    uploading = false;
+    notifyListeners();
   }
 
   Future addAnimal(Pet animal) async {
@@ -66,10 +85,10 @@ class AddPetViewModel extends BaseViewModel {
   }
 
   Future<void> selectPetPictures() async {
-    var resultList = await MultiImagePicker.pickImages(
-      maxImages: 300,
+    images = await MultiImagePicker.pickImages(
+      maxImages: 5,
       enableCamera: true,
     );
-    int i = 5;
+    notifyListeners();
   }
 }
