@@ -37,6 +37,13 @@ class PetDetailsView extends StatelessWidget {
                     ),
                     Container(
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey[400],
+                                offset: Offset(0, 0),
+                                blurRadius: 40,
+                                spreadRadius: 0)
+                          ],
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(30),
@@ -47,41 +54,29 @@ class PetDetailsView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      model.pet.name,
-                                      style: GoogleFonts.fugazOne(
-                                          color: Colors.black, fontSize: 30),
-                                    ),
-                                    Text(
-                                      model.pet.race,
-                                      style: GoogleFonts.palanquin(
-                                          height: 1,
-                                          color: Colors.black,
-                                          fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                                InkWell(
-                                    child: Icon(
-                                      model.isFavourite
-                                          ? Icons.favorite
-                                          : Icons.favorite_outline_outlined,
-                                      color: Colors.red,
-                                      size: 30,
-                                    ),
-                                    onTap: model.setAsFavourite)
-                              ],
+                            buildMainInfoRow(model),
+                            Container(
+                              height: 20,
                             ),
                             Container(
-                              height: 150,
-                              color: Colors.red,
-                              width: size.width,
+                              height: 100,
+                              child: ListView(
+                                children: [
+                                  MainInfoTile(
+                                    value: model.pet.weight.toString(),
+                                    description: "Weight",
+                                  ),
+                                  MainInfoTile(
+                                    value: model.pet.age.toString(),
+                                    description: "Age",
+                                  ),
+                                  MainInfoTile(
+                                    value: model.pet.color + "aasdsd",
+                                    description: "Color",
+                                  ),
+                                ],
+                                scrollDirection: Axis.horizontal,
+                              ),
                             ),
                             Container(
                               height: 150,
@@ -118,6 +113,37 @@ class PetDetailsView extends StatelessWidget {
         viewModelBuilder: () => PetDetailsViewModel(routeData[0]));
   }
 
+  Row buildMainInfoRow(PetDetailsViewModel model) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              model.pet.name,
+              style: GoogleFonts.fugazOne(color: Colors.black, fontSize: 30),
+            ),
+            Text(
+              model.pet.race,
+              style: GoogleFonts.palanquin(
+                  height: 1, color: Colors.black, fontSize: 18),
+            ),
+          ],
+        ),
+        InkWell(
+            child: Icon(
+              model.isFavourite
+                  ? Icons.favorite
+                  : Icons.favorite_outline_outlined,
+              color: Colors.red,
+              size: 30,
+            ),
+            onTap: model.setAsFavourite)
+      ],
+    );
+  }
+
   Padding buildArrowBack(BuildContext context, PetDetailsViewModel model) {
     return Padding(
       padding:
@@ -130,6 +156,47 @@ class PetDetailsView extends StatelessWidget {
             onPressed: () {
               model.goBack();
             }),
+      ),
+    );
+  }
+}
+
+class MainInfoTile extends StatelessWidget {
+  final String value;
+  final String description;
+  const MainInfoTile({
+    this.description,
+    this.value,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.grey[200], borderRadius: BorderRadius.circular(15)),
+        height: 60,
+        width: 110,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                value,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.esteban(
+                    fontSize: 18, fontWeight: FontWeight.w900),
+              ),
+              Text(
+                description,
+                style: GoogleFonts.esteban(
+                    fontSize: 18, fontWeight: FontWeight.w200),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
