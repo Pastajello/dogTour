@@ -23,6 +23,10 @@ class AddPetViewModel extends BaseViewModel {
   bool uploading = false;
   String petName;
   String petDescription;
+  String petWeight;
+  String petAge;
+  String petColor;
+  String petRace;
 
   Future<void> init(BuildContext context) async {}
 
@@ -50,24 +54,31 @@ class AddPetViewModel extends BaseViewModel {
     StorageReference ref = FirebaseStorage().ref().child(
         'pets/${asset.name}'); // To be aligned with the latest firebase API(4.0)
     StorageUploadTask uploadTask = ref.putData(imageData);
-
-    return await (await uploadTask.onComplete).ref.getDownloadURL();
+    var snapshot = (await uploadTask.onComplete);
+    return await snapshot.ref.getDownloadURL();
   }
 
   Future addSomeAnimal() async {
     try {
       uploading = true;
       notifyListeners();
-      var profilePicUrl = await uploadFile();
+      var profilePicUrl = "";
+      if (image != null) profilePicUrl = await uploadFile();
       var pics = List<String>();
-      for (var pic in images) {
-        pics.add(await saveImage(pic));
-      }
+      if (images != null)
+        for (var pic in images) {
+          var img = await saveImage(pic);
+          pics.add(img);
+        }
       await addAnimal(Pet(
           name: petName,
           description: petDescription,
           profilePicUrl: profilePicUrl,
           picsUrl: pics,
+          age: double.tryParse(petAge),
+          color: petColor,
+          race: petRace,
+          weight: double.tryParse(petWeight),
           tags: ["piesel", "brazowy"]));
       notifyListeners();
       _navigationservice.back();

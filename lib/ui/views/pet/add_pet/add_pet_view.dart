@@ -47,9 +47,27 @@ class AddPetView extends StatelessWidget {
                       decoration: InputDecoration(hintText: "Pet name"),
                     ),
                     TextField(
+                      onChanged: (value) => model.petRace = value,
+                      decoration: InputDecoration(hintText: "Pet race"),
+                    ),
+                    TextField(
                       maxLines: null,
                       onChanged: (value) => model.petDescription = value,
                       decoration: InputDecoration(hintText: "Some description"),
+                    ),
+                    TextField(
+                      onChanged: (value) => model.petWeight = value,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(hintText: "Pet weight"),
+                    ),
+                    TextField(
+                      onChanged: (value) => model.petColor = value,
+                      decoration: InputDecoration(hintText: "Pet color"),
+                    ),
+                    TextField(
+                      onChanged: (value) => model.petAge = value,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(hintText: "Pet age"),
                     ),
                     MaterialButton(
                       child: Text("add pet pictures"),

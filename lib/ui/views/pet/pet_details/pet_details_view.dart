@@ -59,7 +59,7 @@ class PetDetailsView extends StatelessWidget {
                                           color: Colors.black, fontSize: 30),
                                     ),
                                     Text(
-                                      model.pet.name,
+                                      model.pet.race,
                                       style: GoogleFonts.palanquin(
                                           height: 1,
                                           color: Colors.black,
