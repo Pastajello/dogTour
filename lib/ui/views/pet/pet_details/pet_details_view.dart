@@ -68,7 +68,7 @@ class PetDetailsView extends StatelessWidget {
                                   ],
                                 ),
                                 InkWell(
-                                    Icon(
+                                    child: Icon(
                                       model.isFavourite
                                           ? Icons.favorite
                                           : Icons.favorite_outline_outlined,
