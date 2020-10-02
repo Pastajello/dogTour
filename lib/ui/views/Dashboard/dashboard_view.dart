@@ -33,12 +33,15 @@ class DashboardView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       var pet = model.pets[index];
                       return InkWell(
-                        onTap: () async => await model.navigateToPetDetais(pet),
+                        onTap: () async =>
+                            await model.navigateToPetDetais(pet, index),
                         child: Card(
                           color: Colors.white,
                           child: ListTile(
                             title: Text(pet.name),
-                            leading: Image.network(pet.profilePicUrl),
+                            leading: Hero(
+                                tag: "petProfilePic$index",
+                                child: Image.network(pet.profilePicUrl)),
                           ),
                         ),
                       );

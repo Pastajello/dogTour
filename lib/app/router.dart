@@ -9,7 +9,9 @@ import 'package:dogtour_admin/ui/views/startup/startup_view.dart';
   routes: <AutoRoute>[
     MaterialRoute(page: StartupView, initial: true),
     MaterialRoute(page: LoginView),
-    MaterialRoute(page: AddPetView),
+    MaterialRoute(
+      page: AddPetView,
+    ),
     MaterialRoute(page: PetDetailsView),
     MaterialRoute(
       page: DashboardView,
