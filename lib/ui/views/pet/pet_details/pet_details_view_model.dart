@@ -12,8 +12,20 @@ class PetDetailsViewModel extends BaseViewModel {
 
   Pet pet;
 
+  bool isFavourite;
+
   PetDetailsViewModel(Pet petDetails) {
     pet = petDetails;
+    isFavourite = false;
   }
   Future<void> init(BuildContext context) async {}
+
+  void goBack() {
+    _navigationservice.back();
+  }
+
+  void setAsFavourite() {
+    isFavourite = !isFavourite;
+    notifyListeners();
+  }
 }
