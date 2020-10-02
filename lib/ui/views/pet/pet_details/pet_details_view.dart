@@ -78,15 +78,18 @@ class PetDetailsView extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                               ),
                             ),
-                            Container(
-                              height: 150,
-                              color: Colors.blue,
-                              width: size.width,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Text(
+                                "About pet",
+                                style: GoogleFonts.capriola(
+                                    color: Colors.black, fontSize: 22),
+                              ),
                             ),
-                            Container(
-                              height: 150,
-                              color: Colors.green,
-                              width: size.width,
+                            Text(
+                              model.pet.description,
+                              style: GoogleFonts.redHatText(fontSize: 16),
                             ),
                             Container(
                               height: 150,
@@ -122,7 +125,7 @@ class PetDetailsView extends StatelessWidget {
           children: [
             Text(
               model.pet.name,
-              style: GoogleFonts.fugazOne(color: Colors.black, fontSize: 30),
+              style: GoogleFonts.capriola(color: Colors.black, fontSize: 30),
             ),
             Text(
               model.pet.race,
