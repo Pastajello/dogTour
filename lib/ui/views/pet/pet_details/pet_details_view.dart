@@ -59,7 +59,7 @@ class PetDetailsView extends StatelessWidget {
                               height: 20,
                             ),
                             Container(
-                              height: 100,
+                              height: 70,
                               child: ListView(
                                 children: [
                                   MainInfoTile(
@@ -71,7 +71,7 @@ class PetDetailsView extends StatelessWidget {
                                     description: "Age",
                                   ),
                                   MainInfoTile(
-                                    value: model.pet.color + "aasdsd",
+                                    value: model.pet.color,
                                     description: "Color",
                                   ),
                                 ],
@@ -84,7 +84,7 @@ class PetDetailsView extends StatelessWidget {
                               child: Text(
                                 "About pet",
                                 style: GoogleFonts.capriola(
-                                    color: Colors.black, fontSize: 22),
+                                    color: Colors.black, fontSize: 20),
                               ),
                             ),
                             Text(
@@ -92,9 +92,27 @@ class PetDetailsView extends StatelessWidget {
                               style: GoogleFonts.redHatText(fontSize: 16),
                             ),
                             Container(
-                              height: 150,
-                              color: Colors.red,
-                              width: size.width,
+                              height: model.pet.picsUrl.length * 200.0,
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: model.pet.picsUrl.length,
+                                itemBuilder: (context, index) {
+                                  var petImage = model.pet.picsUrl[index];
+                                  return InkWell(
+                                    onTap: () => showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
+                                              child: Image.network(
+                                                petImage,
+                                              ),
+                                            )),
+                                    child: Image.network(
+                                      petImage,
+                                      height: 200,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                             Container(
                               height: 150,
@@ -125,12 +143,12 @@ class PetDetailsView extends StatelessWidget {
           children: [
             Text(
               model.pet.name,
-              style: GoogleFonts.capriola(color: Colors.black, fontSize: 30),
+              style: GoogleFonts.capriola(color: Colors.black, fontSize: 24),
             ),
             Text(
               model.pet.race,
               style: GoogleFonts.palanquin(
-                  height: 1, color: Colors.black, fontSize: 18),
+                  height: 1, color: Colors.black, fontSize: 16),
             ),
           ],
         ),
@@ -180,24 +198,25 @@ class MainInfoTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.grey[200], borderRadius: BorderRadius.circular(15)),
-        height: 60,
-        width: 110,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                value,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.esteban(
-                    fontSize: 18, fontWeight: FontWeight.w900),
-              ),
-              Text(
-                description,
-                style: GoogleFonts.esteban(
-                    fontSize: 18, fontWeight: FontWeight.w200),
-              ),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  value,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.esteban(
+                      fontSize: 16, fontWeight: FontWeight.w900),
+                ),
+                Text(
+                  description,
+                  style: GoogleFonts.esteban(
+                      fontSize: 14, fontWeight: FontWeight.w200),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -28,4 +28,8 @@ class PetDetailsViewModel extends BaseViewModel {
     isFavourite = !isFavourite;
     notifyListeners();
   }
+
+  void showPicture(Widget image) {
+    _navigationservice.navigateToView(image);
+  }
 }
