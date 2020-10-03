@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class LoginViewModel extends BaseViewModel {
+class RegisterViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
 

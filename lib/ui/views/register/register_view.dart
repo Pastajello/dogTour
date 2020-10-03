@@ -5,10 +5,10 @@ import 'package:stacked/stacked.dart';
 
 import 'register_view_model.dart';
 
-class LoginView extends StatelessWidget {
+class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<LoginViewModel>.reactive(
+    return ViewModelBuilder<RegisterViewModel>.reactive(
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(),
             body: Container(
@@ -21,6 +21,6 @@ class LoginView extends StatelessWidget {
         onModelReady: (model) async {
           await model.init(context);
         },
-        viewModelBuilder: () => LoginViewModel());
+        viewModelBuilder: () => RegisterViewModel());
   }
 }

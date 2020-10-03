@@ -13,17 +13,23 @@ import '../ui/views/Dashboard/dashboard_view.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/pet/add_pet/add_pet_view.dart';
 import '../ui/views/pet/pet_details/pet_details_view.dart';
+import '../ui/views/register/register_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/welcome/welcome_view.dart';
 
 class Routes {
   static const String startupView = '/';
   static const String loginView = '/login-view';
+  static const String registerView = '/register-view';
+  static const String welcomeView = '/welcome-view';
   static const String addPetView = '/add-pet-view';
   static const String petDetailsView = '/pet-details-view';
   static const String dashboardView = '/dashboard-view';
   static const all = <String>{
     startupView,
     loginView,
+    registerView,
+    welcomeView,
     addPetView,
     petDetailsView,
     dashboardView,
@@ -36,6 +42,8 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.registerView, page: RegisterView),
+    RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.addPetView, page: AddPetView),
     RouteDef(Routes.petDetailsView, page: PetDetailsView),
     RouteDef(Routes.dashboardView, page: DashboardView),
@@ -52,6 +60,18 @@ class Router extends RouterBase {
     LoginView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => LoginView(),
+        settings: data,
+      );
+    },
+    RegisterView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => RegisterView(),
+        settings: data,
+      );
+    },
+    WelcomeView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => WelcomeView(),
         settings: data,
       );
     },
