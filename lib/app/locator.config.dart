@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../services/authetication_service.dart';
+import '../services/firestore_service.dart';
 import '../services/third_party/third_party_services_model.dart';
 
 /// adds generated dependencies
@@ -23,6 +24,7 @@ GetIt $initGetIt(
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   gh.factory<AutheticationService>(() => AutheticationService());
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
+  gh.factory<FirestoreService>(() => FirestoreService());
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   return get;
