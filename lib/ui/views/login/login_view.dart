@@ -14,9 +14,16 @@ class LoginView extends StatelessWidget {
             body: Container(
                 color: Colors.white,
                 child: Column(children: [
-                  TextField(),
+                  TextField(
+                    onChanged: (value) => model.email = value,
+                    decoration: InputDecoration(hintText: "E-mail"),
+                  ),
+                  TextField(
+                    onChanged: (value) => model.password = value,
+                    decoration: InputDecoration(hintText: "Password"),
+                  ),
                   FlatButton(
-                      onPressed: () => model.signIn(), child: Text("olaboga")),
+                      onPressed: () => model.signIn(), child: Text("Log in")),
                 ]))),
         onModelReady: (model) async {
           await model.init(context);

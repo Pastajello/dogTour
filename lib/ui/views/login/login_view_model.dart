@@ -15,10 +15,13 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> init(BuildContext context) async {}
 
+  String email;
+  String password;
+
   Future signIn() async {
     try {
-      final authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: "michal.sierpinski@pm.me", password: "12345678");
+      final authResult = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       _navigationservice.navigateTo(Routes.dashboardView);
     } catch (e) {
       print(e.toString());
