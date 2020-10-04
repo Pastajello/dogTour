@@ -25,9 +25,6 @@ class LoginView extends StatelessWidget {
                   FlatButton(
                       onPressed: () => model.signIn(), child: Text("Log in")),
                 ]))),
-        onModelReady: (model) async {
-          await model.init(context);
-        },
         viewModelBuilder: () => LoginViewModel());
   }
 }
