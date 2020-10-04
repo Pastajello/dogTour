@@ -22,7 +22,7 @@ class LoginViewModel extends BaseViewModel {
     try {
       final authResult = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      _navigationservice.navigateTo(Routes.dashboardView);
+      _navigationservice.replaceWith(Routes.dashboardView);
     } catch (e) {
       print(e.toString());
     }

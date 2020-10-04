@@ -40,7 +40,7 @@ class RegisterViewModel extends BaseViewModel {
           .toJson());
       final asdagh = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: "michal.sierpinski@pm.me", password: "12345678");
-      _navigationservice.navigateTo(Routes.dashboardView);
+      _navigationservice.replaceWith(Routes.dashboardView);
     } catch (e) {
       print(e.toString());
     }
