@@ -30,7 +30,9 @@ GetIt $initGetIt(
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   gh.factory<PermissionService>(() => PermissionService());
-  gh.factory<UserService>(() => UserService());
+
+  // Eager singletons must be registered in the right order
+  gh.singleton<UserService>(UserService());
   return get;
 }
 
