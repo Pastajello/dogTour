@@ -8,9 +8,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
-  final FirestoreService _firestoreService = locator<FirestoreService>();
   final AutheticationService _autheticationService =
       locator<AutheticationService>();
+  final FirestoreService _firestoreService = locator<FirestoreService>();
   final UserService _userService = locator<UserService>();
 
   String email;
