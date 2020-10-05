@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,6 +18,17 @@ class DashboardView extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.add,
+                    size: 40,
+                  ),
+                  color: Colors.black,
+                ),
+                IconButton(
+                  onPressed: () async {
+                    FirebaseAuth.instance.signOut();
+                    await model.logout();
+                  },
+                  icon: Icon(
+                    Icons.logout,
                     size: 40,
                   ),
                   color: Colors.black,

@@ -4,21 +4,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/app/locator.dart';
 import 'package:dogtour_admin/app/router.gr.dart';
 import 'package:dogtour_admin/models/pet.dart';
+import 'package:dogtour_admin/services/permission_servic.dart';
+import 'package:dogtour_admin/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class DashboardViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
-  final DialogService _dialogService = locator<DialogService>();
+  final PermissionService _permissionService = locator<PermissionService>();
 
   List<Pet> pets = [];
 
-  Future navigateToAddPet() async {
-    await _navigationservice.navigateTo(Routes.addPetView);
-  }
+  bool canAddPet = false;
 
   Future init() async {
     await getPets();
+    canAddPet = _permissionService.canUser(UserPermission.addPet);
+  }
+
+  Future navigateToAddPet() async {
+    await _navigationservice.navigateTo(Routes.addPetView);
+
+    notifyListeners();
   }
 
   Future navigateToPetDetais(Pet pet, int index) async {
@@ -41,5 +48,9 @@ class DashboardViewModel extends BaseViewModel {
     }).toList();
     pets.removeWhere((element) => element.name == null);
     notifyListeners();
+  }
+
+  logout() async {
+    await _navigationservice.replaceWith(Routes.welcomeView);
   }
 }
