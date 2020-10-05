@@ -4,10 +4,16 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class FirestoreService {
-  final CollectionReference _usersCollectionReference =
+  final CollectionReference _profilesCollectionReference =
       Firestore.instance.collection("profiles");
 
   Future createUser(User user) async {
-    await _usersCollectionReference.document(user.id).setData(user.toJson());
+    await _profilesCollectionReference.document(user.id).setData(user.toJson());
+  }
+
+  Future<User> getUserProfile(String uid) async {
+    var userProfile = await _profilesCollectionReference.document(uid).get();
+    var user = User.fromJson(userProfile.data);
+    return user;
   }
 }
