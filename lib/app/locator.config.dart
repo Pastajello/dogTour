@@ -10,7 +10,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../services/authetication_service.dart';
 import '../services/firestore_service.dart';
+import '../services/permission_servic.dart';
 import '../services/third_party/third_party_services_model.dart';
+import '../services/user_service.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -27,6 +29,8 @@ GetIt $initGetIt(
   gh.factory<FirestoreService>(() => FirestoreService());
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  gh.factory<PermissionService>(() => PermissionService());
+  gh.factory<UserService>(() => UserService());
   return get;
 }
 
