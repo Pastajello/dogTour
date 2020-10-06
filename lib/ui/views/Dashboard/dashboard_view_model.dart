@@ -51,6 +51,6 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   logout() async {
-    await _navigationservice.replaceWith(Routes.welcomeView);
+    await _navigationservice.clearStackAndShow(Routes.welcomeView);
   }
 }

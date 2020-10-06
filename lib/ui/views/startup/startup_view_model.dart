@@ -17,9 +17,9 @@ class StartupViewModel extends BaseViewModel {
     if (authResult != null) {
       var user = await _firestoreService.getUserProfile(authResult.uid);
       _userService.setUser(user);
-      await _navigationservice.replaceWith(Routes.dashboardView);
+      await _navigationservice.clearStackAndShow(Routes.dashboardView);
     } else {
-      await _navigationservice.replaceWith(Routes.welcomeView);
+      await _navigationservice.clearStackAndShow(Routes.welcomeView);
     }
   }
 }

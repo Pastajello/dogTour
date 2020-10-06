@@ -22,7 +22,7 @@ class LoginViewModel extends BaseViewModel {
           await _autheticationService.signInWithEmail(email, password);
       var user = await _firestoreService.getUserProfile(authResult.user.uid);
       _userService.setUser(user);
-      _navigationservice.replaceWith(Routes.dashboardView);
+      _navigationservice.clearStackAndShow(Routes.dashboardView);
     } catch (e) {
       print(e.toString());
     }
