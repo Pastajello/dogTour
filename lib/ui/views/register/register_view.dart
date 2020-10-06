@@ -20,10 +20,12 @@ class RegisterView extends StatelessWidget {
                   ),
                   TextField(
                     onChanged: (value) => model.password = value,
+                    obscureText: true,
                     decoration: InputDecoration(hintText: "Password"),
                   ),
                   TextField(
                     onChanged: (value) => model.repeatPassword = value,
+                    obscureText: true,
                     decoration: InputDecoration(hintText: "Repeat password"),
                   ),
                   TextField(

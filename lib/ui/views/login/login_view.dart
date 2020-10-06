@@ -20,6 +20,7 @@ class LoginView extends StatelessWidget {
                   ),
                   TextField(
                     onChanged: (value) => model.password = value,
+                    obscureText: true,
                     decoration: InputDecoration(hintText: "Password"),
                   ),
                   FlatButton(
