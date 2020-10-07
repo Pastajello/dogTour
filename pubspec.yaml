@@ -33,6 +33,7 @@ dependencies:
   google_fonts: ^1.1.0
   stacked_services: ^0.5.4+2
   get_it: ^4.0.2
+  table_calendar: ^2.2.3
   injectable: ^1.0.2
   flutter_hooks: ^0.13.2
   shared_preferences: ^0.5.8

@@ -114,11 +114,15 @@ class PetDetailsView extends StatelessWidget {
                                 },
                               ),
                             ),
-                            Container(
-                              height: 150,
-                              color: Colors.yellow,
-                              width: size.width,
-                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  iconSize: 88,
+                                  onPressed: () => model.navigateToCalendar(),
+                                )
+                              ],
+                            )
                           ],
                         ),
                       ),

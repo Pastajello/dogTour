@@ -32,4 +32,8 @@ class PetDetailsViewModel extends BaseViewModel {
   void showPicture(Widget image) {
     _navigationservice.navigateToView(image);
   }
+
+  Future navigateToCalendar() async {
+    _navigationservice.navigateTo(Routes.petCalendarView, arguments: [pet]);
+  }
 }
