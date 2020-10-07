@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../ui/views/Dashboard/dashboard_view.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/pet/add_pet/add_pet_view.dart';
+import '../ui/views/pet/pet_calendar/pet_calendar_view.dart';
 import '../ui/views/pet/pet_details/pet_details_view.dart';
 import '../ui/views/register/register_view.dart';
 import '../ui/views/startup/startup_view.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const String welcomeView = '/welcome-view';
   static const String addPetView = '/add-pet-view';
   static const String petDetailsView = '/pet-details-view';
+  static const String petCalendarView = '/pet-calendar-view';
   static const String dashboardView = '/dashboard-view';
   static const all = <String>{
     startupView,
@@ -32,6 +34,7 @@ class Routes {
     welcomeView,
     addPetView,
     petDetailsView,
+    petCalendarView,
     dashboardView,
   };
 }
@@ -46,6 +49,7 @@ class Router extends RouterBase {
     RouteDef(Routes.welcomeView, page: WelcomeView),
     RouteDef(Routes.addPetView, page: AddPetView),
     RouteDef(Routes.petDetailsView, page: PetDetailsView),
+    RouteDef(Routes.petCalendarView, page: PetCalendarView),
     RouteDef(Routes.dashboardView, page: DashboardView),
   ];
   @override
@@ -84,6 +88,12 @@ class Router extends RouterBase {
     PetDetailsView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => PetDetailsView(),
+        settings: data,
+      );
+    },
+    PetCalendarView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => PetCalendarView(),
         settings: data,
       );
     },
