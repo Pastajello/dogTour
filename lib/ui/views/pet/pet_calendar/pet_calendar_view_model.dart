@@ -6,7 +6,6 @@ import 'package:stacked_services/stacked_services.dart';
 
 class PetCalendarViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
-  final DialogService _dialogService = locator<DialogService>();
 
   Pet pet;
 

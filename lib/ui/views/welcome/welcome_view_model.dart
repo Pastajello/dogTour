@@ -1,7 +1,5 @@
 import 'package:dogtour_admin/app/locator.dart';
 import 'package:dogtour_admin/app/router.gr.dart';
-import 'package:dogtour_admin/services/firestore_service.dart';
-import 'package:dogtour_admin/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
