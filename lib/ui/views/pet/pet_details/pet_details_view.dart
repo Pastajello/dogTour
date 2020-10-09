@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -114,11 +111,15 @@ class PetDetailsView extends StatelessWidget {
                                 },
                               ),
                             ),
-                            Container(
-                              height: 150,
-                              color: Colors.yellow,
-                              width: size.width,
-                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  iconSize: 88,
+                                  onPressed: () => model.navigateToCalendar(),
+                                )
+                              ],
+                            )
                           ],
                         ),
                       ),

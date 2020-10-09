@@ -1,18 +1,17 @@
 import 'package:dogtour_admin/app/locator.dart';
-import 'package:dogtour_admin/app/router.gr.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class PetDetailsViewModel extends BaseViewModel {
+class PetCalendarViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
 
   Pet pet;
 
   bool isFavourite;
 
-  PetDetailsViewModel(Pet petDetails) {
+  PetCalendarViewModel(Pet petDetails) {
     pet = petDetails;
     isFavourite = false;
   }
@@ -29,9 +28,5 @@ class PetDetailsViewModel extends BaseViewModel {
 
   void showPicture(Widget image) {
     _navigationservice.navigateToView(image);
-  }
-
-  Future navigateToCalendar() async {
-    _navigationservice.navigateTo(Routes.petCalendarView, arguments: [pet]);
   }
 }

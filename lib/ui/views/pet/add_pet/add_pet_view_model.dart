@@ -3,9 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/app/locator.dart';
-import 'package:dogtour_admin/app/router.gr.dart';
 import 'package:dogtour_admin/models/pet.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +14,6 @@ import 'package:path/path.dart' as Path;
 
 class AddPetViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
-  final DialogService _dialogService = locator<DialogService>();
 
   PickedFile image;
   List<Asset> images;
