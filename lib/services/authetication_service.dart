@@ -14,4 +14,9 @@ class AutheticationService {
         .createUserWithEmailAndPassword(email: email, password: password);
     return authResult;
   }
+
+  Future<AuthResult> signInAnonymously() async {
+    final authResult = await FirebaseAuth.instance.signInAnonymously();
+    return authResult;
+  }
 }
