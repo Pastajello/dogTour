@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
@@ -113,11 +114,13 @@ class PetDetailsView extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                IconButton(
-                                  icon: Icon(Icons.calendar_today),
-                                  iconSize: 88,
-                                  onPressed: () => model.navigateToCalendar(),
-                                )
+                                if (model.canWalkPet !=
+                                    PermissionState.forbidden)
+                                  IconButton(
+                                    icon: Icon(Icons.calendar_today),
+                                    iconSize: 88,
+                                    onPressed: () => model.navigateToCalendar(),
+                                  )
                               ],
                             )
                           ],

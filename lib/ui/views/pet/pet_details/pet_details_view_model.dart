@@ -10,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 class PetDetailsViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final PermissionService _permissionService = locator<PermissionService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   Pet pet;
 
@@ -45,6 +46,19 @@ class PetDetailsViewModel extends BaseViewModel {
   }
 
   Future navigateToCalendar() async {
-    _navigationservice.navigateTo(Routes.petCalendarView, arguments: [pet]);
+    if (canWalkPet == PermissionState.allowed)
+      _navigationservice.navigateTo(Routes.petCalendarView, arguments: [pet]);
+    else if (canWalkPet == PermissionState.login) {
+      var result = await _dialogService.showDialog(
+          barrierDismissible: true,
+          title: "Wait",
+          buttonTitle: "ok",
+          cancelTitle: "nope",
+          description: "You need to login first to walk this pet");
+      if (result.confirmed) {
+        await _navigationservice
+            .navigateTo(Routes.loginView, arguments: [true]);
+      }
+    }
   }
 }
