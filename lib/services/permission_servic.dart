@@ -1,4 +1,5 @@
 import 'package:dogtour_admin/app/locator.dart';
+import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:injectable/injectable.dart';
 
 import 'user_service.dart';
@@ -17,27 +18,43 @@ enum UserPermission {
 class PermissionService {
   final UserService _userService = locator<UserService>();
 
-  var userPermissions = [
-    UserPermission.walkPet,
-    UserPermission.adoptPet,
-    UserPermission.sponsorPet
-  ];
-  var moderatorPermissions = [
-    UserPermission.addPet,
-    UserPermission.deletePet,
-    UserPermission.editPet
-  ];
+  var guestPermissions = {
+    UserPermission.walkPet: PermissionState.login,
+    UserPermission.adoptPet: PermissionState.login,
+    UserPermission.sponsorPet: PermissionState.login,
+  };
 
-  bool canUser(UserPermission permission) {
+  var userPermissions = {
+    UserPermission.walkPet: PermissionState.allowed,
+    UserPermission.adoptPet: PermissionState.allowed,
+    UserPermission.sponsorPet: PermissionState.allowed,
+  };
+
+  var moderatorPermissions = {
+    UserPermission.addPet: PermissionState.allowed,
+    UserPermission.deletePet: PermissionState.allowed,
+    UserPermission.editPet: PermissionState.allowed,
+  };
+
+  PermissionState canUser(UserPermission permission) {
     var user = _userService.getUser();
 
+    if (user == null)
+      return guestPermissions.containsKey(permission)
+          ? guestPermissions[permission]
+          : PermissionState.forbidden;
+
     if (user.userRole == "admin") {
-      return true;
+      return PermissionState.allowed;
     } else if (user.userRole == "user") {
-      return userPermissions.contains(permission);
+      return userPermissions.containsKey(permission)
+          ? userPermissions[permission]
+          : PermissionState.forbidden;
     } else if (user.userRole == "moderator") {
-      return moderatorPermissions.contains(permission);
+      return moderatorPermissions.containsKey(permission)
+          ? moderatorPermissions[permission]
+          : PermissionState.forbidden;
     }
-    return false;
+    return PermissionState.forbidden;
   }
 }

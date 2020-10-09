@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/app/locator.dart';
 import 'package:dogtour_admin/app/router.gr.dart';
+import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:dogtour_admin/services/permission_servic.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -12,11 +14,13 @@ class DashboardViewModel extends BaseViewModel {
 
   List<Pet> pets = [];
 
-  bool canAddPet = false;
+  PermissionState canAddPet = PermissionState.forbidden;
 
   Future init() async {
     await getPets();
     canAddPet = _permissionService.canUser(UserPermission.addPet);
+
+    notifyListeners();
   }
 
   Future navigateToAddPet() async {
@@ -48,6 +52,7 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   logout() async {
+    FirebaseAuth.instance.signOut();
     await _navigationservice.clearStackAndShow(Routes.welcomeView);
   }
 }

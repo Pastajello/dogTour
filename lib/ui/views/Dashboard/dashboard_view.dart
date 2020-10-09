@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,27 +12,17 @@ class DashboardView extends StatelessWidget {
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               actions: <Widget>[
-                IconButton(
-                  onPressed: () async {
-                    await model.navigateToAddPet();
-                  },
-                  icon: Icon(
-                    Icons.add,
-                    size: 40,
+                if (model.canAddPet == PermissionState.allowed)
+                  IconButton(
+                    onPressed: () async {
+                      await model.navigateToAddPet();
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      size: 40,
+                    ),
+                    color: Colors.black,
                   ),
-                  color: Colors.black,
-                ),
-                IconButton(
-                  onPressed: () async {
-                    FirebaseAuth.instance.signOut();
-                    await model.logout();
-                  },
-                  icon: Icon(
-                    Icons.logout,
-                    size: 40,
-                  ),
-                  color: Colors.black,
-                )
               ],
               backgroundColor: R.colors.main,
             ),
