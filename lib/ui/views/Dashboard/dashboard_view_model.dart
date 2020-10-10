@@ -4,8 +4,8 @@ import 'package:dogtour_admin/app/router.gr.dart';
 import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:dogtour_admin/services/permission_servic.dart';
+import 'package:dogtour_admin/services/authetication_service.dart';
 import 'package:dogtour_admin/services/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,6 +13,8 @@ class DashboardViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final PermissionService _permissionService = locator<PermissionService>();
   final UserService _userService = locator<UserService>();
+  final AutheticationService _autheticationService =
+      locator<AutheticationService>();
 
   List<Pet> pets = [];
 
@@ -53,12 +55,12 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   logout() async {
-    FirebaseAuth.instance.signOut();
-    _navigationservice.clearStackAndShow(Routes.dashboardView);
+    _autheticationService.signOut();
+    setPermissions();
   }
 
   login() async {
-    await _navigationservice.clearStackAndShow(Routes.loginView);
+    await _navigationservice.navigateTo(Routes.loginView);
     setPermissions();
   }
 

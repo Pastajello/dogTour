@@ -9,6 +9,10 @@ class UserService {
     return _user;
   }
 
+  void removeUser() {
+    _user = null;
+  }
+
   void setUser(User user) {
     _user = user;
   }
