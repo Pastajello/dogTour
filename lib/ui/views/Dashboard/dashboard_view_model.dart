@@ -21,9 +21,7 @@ class DashboardViewModel extends BaseViewModel {
 
   Future init() async {
     await getPets();
-    canAddPet = _permissionService.canUser(UserPermission.addPet);
-    isSignedIn = _userService.getUser() != null;
-    notifyListeners();
+    setPermissions();
   }
 
   Future navigateToAddPet() async {
@@ -61,5 +59,12 @@ class DashboardViewModel extends BaseViewModel {
 
   login() async {
     await _navigationservice.clearStackAndShow(Routes.loginView);
+    setPermissions();
+  }
+
+  setPermissions() async {
+    canAddPet = _permissionService.canUser(UserPermission.addPet);
+    isSignedIn = _userService.getUser() != null;
+    notifyListeners();
   }
 }
