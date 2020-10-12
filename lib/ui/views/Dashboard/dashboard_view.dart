@@ -1,13 +1,13 @@
 import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'dashboard_view_model.dart';
 import '../../resources.dart';
 
 class DashboardView extends StatelessWidget {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -39,11 +39,51 @@ class DashboardView extends StatelessWidget {
               backgroundColor: R.colors.main,
             ),
             drawer: buildDrawer(size, innerContext, model),
+            bottomNavigationBar: Container(
+              decoration: BoxDecoration(color: Colors.yellow, boxShadow: [
+                BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+              ]),
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  child: GNav(
+                      gap: 8,
+                      activeColor: Colors.white,
+                      iconSize: 24,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      duration: Duration(milliseconds: 800),
+                      tabBackgroundColor: Colors.grey[800],
+                      tabs: [
+                        GButton(
+                          icon: Icons.home,
+                          text: 'Home',
+                        ),
+                        GButton(
+                          icon: Icons.hearing,
+                          text: 'Likes',
+                        ),
+                        GButton(
+                          icon: Icons.search,
+                          text: 'Search',
+                        ),
+                        GButton(
+                          icon: Icons.supervisor_account,
+                          text: 'Profile',
+                        ),
+                      ],
+                      selectedIndex: _selectedIndex,
+                      onTabChange: (index) {}),
+                ),
+              ),
+            ),
             body: Container(
                 color: Colors.white,
                 child: RefreshIndicator(
                   onRefresh: () async => await model.getPets(),
                   child: GridView.builder(
+                    itemCount: model.pets.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount:
                             (orientation == Orientation.portrait) ? 2 : 3),
@@ -53,13 +93,11 @@ class DashboardView extends StatelessWidget {
                         onTap: () async =>
                             await model.navigateToPetDetais(pet, index),
                         child: Card(
+                          elevation: 10,
                           color: Colors.white,
-                          child: ListTile(
-                            title: Text(pet.name),
-                            leading: Hero(
-                                tag: "petProfilePic$index",
-                                child: Image.network(pet.profilePicUrl)),
-                          ),
+                          child: Hero(
+                              tag: "petProfilePic$index",
+                              child: Image.network(pet.profilePicUrl)),
                         ),
                       );
                     },
