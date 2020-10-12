@@ -20,7 +20,7 @@ class DashboardViewModel extends BaseViewModel {
 
   PermissionState canAddPet = PermissionState.forbidden;
   bool isSignedIn = false;
-
+  int selectedIndex = 0;
   Future init() async {
     await getPets();
     setPermissions();
@@ -67,6 +67,11 @@ class DashboardViewModel extends BaseViewModel {
   setPermissions() async {
     canAddPet = _permissionService.canUser(UserPermission.addPet);
     isSignedIn = _userService.getUser() != null;
+    notifyListeners();
+  }
+
+  changeTab(int tabIndex) {
+    selectedIndex = tabIndex;
     notifyListeners();
   }
 }

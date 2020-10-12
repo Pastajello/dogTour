@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/app/locator.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:firebase_storage/firebase_storage.dart';

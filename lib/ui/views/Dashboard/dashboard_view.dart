@@ -1,13 +1,12 @@
 import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'dashboard_view_model.dart';
 import '../../resources.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class DashboardView extends StatelessWidget {
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  int _selectedIndex = 0;
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -40,44 +39,55 @@ class DashboardView extends StatelessWidget {
             ),
             drawer: buildDrawer(size, innerContext, model),
             bottomNavigationBar: Container(
-              decoration: BoxDecoration(color: Colors.yellow, boxShadow: [
-                BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-              ]),
-              child: SafeArea(
+                color: Colors.white,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                  child: GNav(
-                      gap: 8,
-                      activeColor: Colors.white,
-                      iconSize: 24,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                      duration: Duration(milliseconds: 800),
-                      tabBackgroundColor: Colors.grey[800],
-                      tabs: [
-                        GButton(
-                          icon: Icons.home,
-                          text: 'Home',
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.yellow,
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 20,
+                                color: Colors.black.withOpacity(.1))
+                          ]),
+                      child: SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 8),
+                          child: GNav(
+                              gap: 8,
+                              activeColor: Colors.white,
+                              iconSize: 24,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                              duration: Duration(milliseconds: 800),
+                              tabBackgroundColor: Colors.grey[800],
+                              tabs: [
+                                GButton(
+                                  icon: Icons.home,
+                                  text: 'Home',
+                                ),
+                                GButton(
+                                  icon: Icons.hearing,
+                                  text: 'Likes',
+                                ),
+                                GButton(
+                                  icon: Icons.search,
+                                  text: 'Search',
+                                ),
+                                GButton(
+                                  icon: Icons.supervisor_account,
+                                  text: 'Profile',
+                                ),
+                              ],
+                              selectedIndex: model.selectedIndex,
+                              onTabChange: (index) {
+                                model.changeTab(index);
+                              }),
                         ),
-                        GButton(
-                          icon: Icons.hearing,
-                          text: 'Likes',
-                        ),
-                        GButton(
-                          icon: Icons.search,
-                          text: 'Search',
-                        ),
-                        GButton(
-                          icon: Icons.supervisor_account,
-                          text: 'Profile',
-                        ),
-                      ],
-                      selectedIndex: _selectedIndex,
-                      onTabChange: (index) {}),
-                ),
-              ),
-            ),
+                      ),
+                    ))),
             body: Container(
                 color: Colors.white,
                 child: RefreshIndicator(
