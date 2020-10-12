@@ -25,6 +25,7 @@ class PetDetailsViewModel extends BaseViewModel {
     pet = petDetails;
     isFavourite = false;
   }
+
   Future<void> init(BuildContext context) async {
     canWalkPet = _permissionService.canUser(UserPermission.walkPet);
     canEditPet = _permissionService.canUser(UserPermission.editPet);
@@ -55,7 +56,7 @@ class PetDetailsViewModel extends BaseViewModel {
           buttonTitle: "ok",
           cancelTitle: "nope",
           description: "You need to login first to walk this pet");
-      if (result.confirmed) {
+      if (result?.confirmed == true) {
         await _navigationservice
             .navigateTo(Routes.loginView, arguments: [true]);
       }
