@@ -94,7 +94,7 @@ class AddPetView extends StatelessWidget {
                       ),
                     MaterialButton(
                       child: Text("add pet"),
-                      onPressed: model.addSomeAnimal,
+                      onPressed: model.addPet,
                     ),
                   ],
                 ),

@@ -61,11 +61,11 @@ class PetDetailsView extends StatelessWidget {
                               child: ListView(
                                 children: [
                                   MainInfoTile(
-                                    value: model.pet.weight.toString(),
+                                    value: model.pet.weight.toStringAsFixed(0),
                                     description: "Weight",
                                   ),
                                   MainInfoTile(
-                                    value: model.pet.age.toString(),
+                                    value: model.pet.age.toStringAsFixed(0),
                                     description: "Age",
                                   ),
                                   MainInfoTile(

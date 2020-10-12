@@ -11,6 +11,7 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
     return ViewModelBuilder<DashboardViewModel>.reactive(
         builder: (innerContext, model, child) => Scaffold(
             key: _drawerKey,
@@ -37,78 +38,15 @@ class DashboardView extends StatelessWidget {
               ],
               backgroundColor: R.colors.main,
             ),
-            drawer: Container(
-              color: Colors.white,
-              width: size.width * 0.8,
-              child: ListView(
-                children: [
-                  Container(
-                    color: Colors.blue,
-                    height: 200,
-                    child: Center(
-                      child: Icon(
-                        Icons.account_circle,
-                        color: Colors.white,
-                        size: 150,
-                      ),
-                    ),
-                  ),
-                  ...ListTile.divideTiles(context: innerContext, tiles: [
-                    if (model.isSignedIn)
-                      ListTile(
-                        title: Text("Profile"),
-                        leading: Icon(Icons.account_circle),
-                        trailing: Icon(Icons.arrow_forward),
-                      )
-                    else
-                      ListTile(
-                        title: Text("Sign in"),
-                        leading: Icon(Icons.account_circle),
-                        trailing: Icon(Icons.arrow_forward),
-                        onTap: model.login,
-                      ),
-                    ListTile(
-                      title: Text("Map"),
-                      leading: Icon(Icons.map),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    ListTile(
-                      title: Text("Organizations"),
-                      leading: Icon(Icons.map),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    ListTile(
-                      title: Text("Adopted"),
-                      leading: Icon(Icons.map),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    ListTile(
-                      title: Text("Virtualy adopted"),
-                      leading: Icon(Icons.map),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    ListTile(
-                      title: Text("Donations"),
-                      leading: Icon(Icons.monetization_on),
-                      trailing: Icon(Icons.arrow_forward),
-                    ),
-                    if (model.isSignedIn)
-                      ListTile(
-                        title: Text("Sign out"),
-                        leading: Icon(Icons.logout),
-                        trailing: Icon(Icons.arrow_forward),
-                        onTap: model.logout,
-                      ),
-                  ]).toList(),
-                ],
-              ),
-            ),
+            drawer: buildDrawer(size, innerContext, model),
             body: Container(
                 color: Colors.white,
                 child: RefreshIndicator(
                   onRefresh: () async => await model.getPets(),
-                  child: ListView.builder(
-                    itemCount: model.pets.length,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            (orientation == Orientation.portrait) ? 2 : 3),
                     itemBuilder: (context, index) {
                       var pet = model.pets[index];
                       return InkWell(
@@ -129,5 +67,75 @@ class DashboardView extends StatelessWidget {
                 ))),
         onModelReady: (model) async => await model.init(),
         viewModelBuilder: () => DashboardViewModel());
+  }
+
+  Container buildDrawer(
+      Size size, BuildContext innerContext, DashboardViewModel model) {
+    return Container(
+      color: Colors.white,
+      width: size.width * 0.8,
+      child: ListView(
+        children: [
+          Container(
+            color: Colors.blue,
+            height: 200,
+            child: Center(
+              child: Icon(
+                Icons.account_circle,
+                color: Colors.white,
+                size: 150,
+              ),
+            ),
+          ),
+          ...ListTile.divideTiles(context: innerContext, tiles: [
+            if (model.isSignedIn)
+              ListTile(
+                title: Text("Profile"),
+                leading: Icon(Icons.account_circle),
+                trailing: Icon(Icons.arrow_forward),
+              )
+            else
+              ListTile(
+                title: Text("Sign in"),
+                leading: Icon(Icons.account_circle),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: model.login,
+              ),
+            ListTile(
+              title: Text("Map"),
+              leading: Icon(Icons.map),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Organizations"),
+              leading: Icon(Icons.map),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Adopted"),
+              leading: Icon(Icons.map),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Virtualy adopted"),
+              leading: Icon(Icons.map),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            ListTile(
+              title: Text("Donations"),
+              leading: Icon(Icons.monetization_on),
+              trailing: Icon(Icons.arrow_forward),
+            ),
+            if (model.isSignedIn)
+              ListTile(
+                title: Text("Sign out"),
+                leading: Icon(Icons.logout),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: model.logout,
+              ),
+          ]).toList(),
+        ],
+      ),
+    );
   }
 }

@@ -11,9 +11,11 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:path/path.dart' as Path;
+import 'package:dogtour_admin/services/firestore_service.dart';
 
 class AddPetViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
+  final FirestoreService _firestoreService = locator<FirestoreService>();
 
   PickedFile image;
   List<Asset> images;
@@ -45,17 +47,15 @@ class AddPetViewModel extends BaseViewModel {
   }
 
   Future saveImage(Asset asset) async {
-    ByteData byteData =
-        await asset.getByteData(); // requestOriginal is being deprecated
+    ByteData byteData = await asset.getByteData();
     List<int> imageData = byteData.buffer.asUint8List();
-    StorageReference ref = FirebaseStorage().ref().child(
-        'pets/${asset.name}'); // To be aligned with the latest firebase API(4.0)
+    StorageReference ref = FirebaseStorage().ref().child('pets/${asset.name}');
     StorageUploadTask uploadTask = ref.putData(imageData);
     var snapshot = (await uploadTask.onComplete);
     return await snapshot.ref.getDownloadURL();
   }
 
-  Future addSomeAnimal() async {
+  Future addPet() async {
     try {
       uploading = true;
       notifyListeners();
@@ -67,7 +67,7 @@ class AddPetViewModel extends BaseViewModel {
           var img = await saveImage(pic);
           pics.add(img);
         }
-      await addAnimal(Pet(
+      await _firestoreService.addPet(Pet(
           name: petName,
           description: petDescription,
           profilePicUrl: profilePicUrl,
@@ -84,12 +84,6 @@ class AddPetViewModel extends BaseViewModel {
     }
     uploading = false;
     notifyListeners();
-  }
-
-  Future addAnimal(Pet animal) async {
-    CollectionReference collection = Firestore.instance.collection('pets');
-
-    await collection.add(animal.toJson());
   }
 
   Future<void> selectPetPictures() async {
