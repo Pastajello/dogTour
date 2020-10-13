@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dogtour_admin/app/locator.dart';
 import 'package:dogtour_admin/models/pet.dart';
+import 'package:dogtour_admin/models/reserved_spot.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -66,7 +67,7 @@ class AddPetViewModel extends BaseViewModel {
           var img = await saveImage(pic);
           pics.add(img);
         }
-      await _firestoreService.addPet(Pet(
+      var pet = Pet(
           name: petName,
           description: petDescription,
           profilePicUrl: profilePicUrl,
@@ -75,7 +76,15 @@ class AddPetViewModel extends BaseViewModel {
           color: petColor,
           race: petRace,
           weight: double.tryParse(petWeight),
-          tags: ["piesel", "brazowy"]));
+          tags: ["piesel", "brazowy"]);
+      var petDocRef = await _firestoreService.addPet(pet);
+      pet.id = petDocRef.documentID;
+      pet.calendar = await _firestoreService.createPetCalendar(pet.id);
+      pet.calendar.reservedHours.add(ReservedSpot(
+          start: DateTime.now(),
+          end: DateTime.now().add(Duration(hours: 1)),
+          userId: "asertyu"));
+      await _firestoreService.updatePetCalendar(pet);
       notifyListeners();
       _navigationservice.back();
     } catch (e) {

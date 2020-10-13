@@ -5,6 +5,7 @@ import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:dogtour_admin/services/permission_servic.dart';
 import 'package:dogtour_admin/services/authetication_service.dart';
+import 'package:dogtour_admin/services/firestore_service.dart';
 import 'package:dogtour_admin/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -12,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 class DashboardViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final PermissionService _permissionService = locator<PermissionService>();
+  final FirestoreService _firestoreService = locator<FirestoreService>();
   final UserService _userService = locator<UserService>();
   final AutheticationService _autheticationService =
       locator<AutheticationService>();
@@ -21,6 +23,7 @@ class DashboardViewModel extends BaseViewModel {
   PermissionState canAddPet = PermissionState.forbidden;
   bool isSignedIn = false;
   int selectedIndex = 0;
+
   Future init() async {
     await getPets();
     setPermissions();
@@ -38,18 +41,7 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   Future getPets() async {
-    var petCollection =
-        await Firestore.instance.collection("pets").getDocuments();
-    pets = petCollection.documents
-        .where((element) => element.data["name"] != "")
-        .map((e) {
-      try {
-        var pet = Pet.fromJson(e.data);
-        return pet;
-      } catch (e) {
-        return null;
-      }
-    }).toList();
+    pets = await _firestoreService.getPets();
     pets.removeWhere((element) => element.name == null);
     notifyListeners();
   }

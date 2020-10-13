@@ -1,8 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:dogtour_admin/models/calendar.dart';
+
 part 'pet.g.dart';
 
 @JsonSerializable()
 class Pet {
+  String id;
   String name;
   String description;
   String profilePicUrl;
@@ -12,7 +15,7 @@ class Pet {
   String race;
   List<String> tags;
   List<String> picsUrl;
-
+  Calendar calendar;
   Pet(
       {this.description,
       this.name,

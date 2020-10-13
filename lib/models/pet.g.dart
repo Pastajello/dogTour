@@ -17,10 +17,15 @@ Pet _$PetFromJson(Map<String, dynamic> json) {
     color: json['color'] as String,
     race: json['race'] as String,
     weight: (json['weight'] as num)?.toDouble(),
-  );
+  )
+    ..id = json['id'] as String
+    ..calendar = json['calendar'] == null
+        ? null
+        : Calendar.fromJson(json['calendar'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$PetToJson(Pet instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'profilePicUrl': instance.profilePicUrl,
@@ -30,4 +35,5 @@ Map<String, dynamic> _$PetToJson(Pet instance) => <String, dynamic>{
       'race': instance.race,
       'tags': instance.tags,
       'picsUrl': instance.picsUrl,
+      'calendar': instance.calendar,
     };
