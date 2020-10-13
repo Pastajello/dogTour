@@ -80,12 +80,9 @@ class AddPetViewModel extends BaseViewModel {
       var petDocRef = await _firestoreService.addPet(pet);
       pet.id = petDocRef.documentID;
       pet.calendar = await _firestoreService.createPetCalendar(pet.id);
-      pet.calendar.reservedHours.add(ReservedSpot(
-          start: DateTime.now(),
-          end: DateTime.now().add(Duration(hours: 1)),
-          userId: "asertyu"));
-      await _firestoreService.updatePetCalendar(pet);
+
       notifyListeners();
+
       _navigationservice.back();
     } catch (e) {
       print(e.toString());

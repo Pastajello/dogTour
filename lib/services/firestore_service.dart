@@ -3,6 +3,7 @@ import 'package:dogtour_admin/models/user.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:dogtour_admin/models/calendar.dart';
+import 'package:dogtour_admin/models/reserved_spot.dart';
 
 @injectable
 class FirestoreService {
@@ -28,15 +29,16 @@ class FirestoreService {
   }
 
   Future createPetCalendar(String id) async {
-    var calendar = Calendar(isBlocked: false, petId: id, reservedHours: []);
-    await _calendarsCollectionReference.document(id).setData(calendar.toJson());
-    return calendar;
+    await _calendarsCollectionReference
+        .document(id)
+        .setData(Calendar(isBlocked: false, petId: id).toJson());
   }
 
-  Future updatePetCalendar(Pet pet) async {
+  Future addSpotToPetCalendar(Pet pet, ReservedSpot spot) async {
     await _calendarsCollectionReference
         .document(pet.id)
-        .updateData(pet.calendar.toJson());
+        .collection("spots")
+        .add(spot.toJson());
   }
 
   Future<List<Pet>> getPets() async {

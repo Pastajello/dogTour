@@ -7,8 +7,9 @@ part 'calendar.g.dart';
 class Calendar {
   String petId;
   bool isBlocked;
+  @JsonKey(ignore: true)
   List<ReservedSpot> reservedHours;
-  Calendar({this.isBlocked, this.petId, this.reservedHours});
+  Calendar({this.isBlocked, this.petId});
 
   factory Calendar.fromJson(Map<String, dynamic> json) =>
       _$CalendarFromJson(json);
