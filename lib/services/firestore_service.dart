@@ -41,6 +41,23 @@ class FirestoreService {
         .add(spot.toJson());
   }
 
+  Future<List<ReservedSpot>> getReservedSpots(String petId) async {
+    var spots = (await _calendarsCollectionReference
+            .document(petId)
+            .collection("spots")
+            .getDocuments())
+        .documents
+        .map((e) {
+      try {
+        var spot = ReservedSpot.fromJson(e.data);
+        return spot;
+      } catch (e) {
+        return null;
+      }
+    }).toList();
+    return spots;
+  }
+
   Future<List<Pet>> getPets() async {
     var pets = (await _petCollectionReference.getDocuments())
         .documents
