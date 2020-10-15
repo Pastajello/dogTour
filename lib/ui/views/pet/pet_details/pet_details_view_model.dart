@@ -3,6 +3,7 @@ import 'package:dogtour_admin/app/router.gr.dart';
 import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:dogtour_admin/models/pet.dart';
 import 'package:dogtour_admin/services/permission_servic.dart';
+import 'package:dogtour_admin/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -10,6 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 class PetDetailsViewModel extends BaseViewModel {
   final NavigationService _navigationservice = locator<NavigationService>();
   final PermissionService _permissionService = locator<PermissionService>();
+  final FirestoreService _fireStoreService = locator<FirestoreService>();
   final DialogService _dialogService = locator<DialogService>();
 
   Pet pet;
@@ -20,6 +22,7 @@ class PetDetailsViewModel extends BaseViewModel {
   PermissionState canEditPet;
   PermissionState canAdoptPet;
   PermissionState canSponsorPet;
+  PermissionState canDeletePet;
 
   PetDetailsViewModel(Pet petDetails) {
     pet = petDetails;
@@ -31,15 +34,21 @@ class PetDetailsViewModel extends BaseViewModel {
     canEditPet = _permissionService.canUser(UserPermission.editPet);
     canAdoptPet = _permissionService.canUser(UserPermission.adoptPet);
     canSponsorPet = _permissionService.canUser(UserPermission.sponsorPet);
+    canDeletePet = _permissionService.canUser(UserPermission.deletePet);
   }
 
-  void goBack() {
-    _navigationservice.back();
+  void goBack({args}) {
+    _navigationservice.back(result: args);
   }
 
   void setAsFavourite() {
     isFavourite = !isFavourite;
     notifyListeners();
+  }
+
+  void deletePet() async {
+    _fireStoreService.deletePet(pet);
+    goBack(args: true);
   }
 
   void showPicture(Widget image) {

@@ -142,20 +142,33 @@ class PetDetailsView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              model.pet.name,
-              style: GoogleFonts.capriola(color: Colors.black, fontSize: 24),
-            ),
-            Text(
-              model.pet.race,
-              style: GoogleFonts.palanquin(
-                  height: 1, color: Colors.black, fontSize: 16),
-            ),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                model.pet.name,
+                style: GoogleFonts.capriola(color: Colors.black, fontSize: 24),
+              ),
+              Text(
+                model.pet.race,
+                style: GoogleFonts.palanquin(
+                    height: 1, color: Colors.black, fontSize: 16),
+              ),
+            ],
+          ),
         ),
+        if (model.canDeletePet == PermissionState.allowed)
+          InkWell(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.black,
+                  size: 30,
+                ),
+              ),
+              onTap: model.deletePet),
         InkWell(
             child: Icon(
               model.isFavourite

@@ -28,6 +28,10 @@ class FirestoreService {
     return await _petCollectionReference.add(pet.toJson());
   }
 
+  Future deletePet(Pet pet) async {
+    return await _petCollectionReference.document(pet.id).delete();
+  }
+
   Future createPetCalendar(String id) async {
     await _calendarsCollectionReference
         .document(id)

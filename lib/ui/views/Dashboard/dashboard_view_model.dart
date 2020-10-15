@@ -36,8 +36,11 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   Future navigateToPetDetais(Pet pet, int index) async {
-    await _navigationservice
+    var result = await _navigationservice
         .navigateTo(Routes.petDetailsView, arguments: [pet, index]);
+    if (result != null) {
+      await getPets();
+    }
   }
 
   Future getPets() async {
