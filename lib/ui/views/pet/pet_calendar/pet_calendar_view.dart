@@ -31,7 +31,7 @@ class PetCalendarView extends StatelessWidget {
                             return day.isAfter(DateTime.now()) || isToday;
                           },
                           calendarController: _calendarController,
-                          onDaySelected: (day, events) {
+                          onDaySelected: (day, events, holidays) {
                             model.changeSelectedDay(day);
                           },
                           initialCalendarFormat: CalendarFormat.twoWeeks,
