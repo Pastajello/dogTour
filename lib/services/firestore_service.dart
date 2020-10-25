@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogtour_admin/models/user.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dogtour_admin/models/pet.dart';
+import 'package:dogtour_admin/models/organization.dart';
 import 'package:dogtour_admin/models/calendar.dart';
 import 'package:dogtour_admin/models/reserved_spot.dart';
 
@@ -22,6 +23,38 @@ class FirestoreService {
     var userProfile = await _profilesCollectionReference.document(uid).get();
     var user = User.fromJson(userProfile.data);
     return user;
+  }
+
+  Future addFavouriteToUser(User user, Pet pet) async {
+    await _profilesCollectionReference
+        .document(user.id)
+        .collection("favourites")
+        .document(pet.id)
+        .setData({'id': pet.id});
+  }
+
+  Future removeFavouriteToUser(User user, Pet pet) async {
+    await _profilesCollectionReference
+        .document(user.id)
+        .collection("favourites")
+        .document(pet.id)
+        .delete();
+  }
+
+  Future addDonationToUser(User user, Organization organization) async {
+    await _profilesCollectionReference
+        .document(user.id)
+        .collection("donations")
+        .document(organization.id)
+        .setData({'id': organization.id});
+  }
+
+  Future removeDonationToUser(User user, Organization organization) async {
+    await _profilesCollectionReference
+        .document(user.id)
+        .collection("donations")
+        .document(organization.id)
+        .delete();
   }
 
   Future<DocumentReference> addPet(Pet pet) async {
