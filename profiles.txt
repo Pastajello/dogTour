@@ -1,0 +1,13 @@
+profiles
+-favourites
+-walks
+-donations
+
+organizations
+-members
+-pets
+-donations
+
+pets
+-walks
+
