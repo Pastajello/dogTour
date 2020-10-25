@@ -2,6 +2,7 @@ import 'package:dogtour_admin/models/permission_state.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'dashboard_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../resources.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -38,83 +39,112 @@ class DashboardView extends StatelessWidget {
               backgroundColor: R.colors.main,
             ),
             drawer: buildDrawer(size, innerContext, model),
-            bottomNavigationBar: Container(
-                color: Colors.white,
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.yellow,
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 20,
-                                color: Colors.black.withOpacity(.1))
-                          ]),
-                      child: SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 8),
-                          child: GNav(
-                              gap: 8,
-                              activeColor: Colors.white,
-                              iconSize: 24,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
-                              duration: Duration(milliseconds: 800),
-                              tabBackgroundColor: Colors.grey[800],
-                              tabs: [
-                                GButton(
-                                  icon: Icons.home,
-                                  text: 'Home',
-                                ),
-                                GButton(
-                                  icon: Icons.hearing,
-                                  text: 'Likes',
-                                ),
-                                GButton(
-                                  icon: Icons.search,
-                                  text: 'Search',
-                                ),
-                                GButton(
-                                  icon: Icons.supervisor_account,
-                                  text: 'Profile',
-                                ),
-                              ],
-                              selectedIndex: model.selectedIndex,
-                              onTabChange: (index) {
-                                model.changeTab(index);
-                              }),
-                        ),
-                      ),
-                    ))),
+            // bottomNavigationBar:
+            // buildNavigationBar(model),
             body: Container(
                 color: Colors.white,
                 child: RefreshIndicator(
                   onRefresh: () async => await model.getPets(),
-                  child: GridView.builder(
+                  child: ListView.builder(
                     itemCount: model.pets.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            (orientation == Orientation.portrait) ? 2 : 3),
                     itemBuilder: (context, index) {
                       var pet = model.pets[index];
-                      return InkWell(
-                        onTap: () async =>
-                            await model.navigateToPetDetais(pet, index),
-                        child: Card(
-                          elevation: 10,
-                          color: Colors.white,
-                          child: Hero(
-                              tag: "petProfilePic$index",
-                              child: Image.network(pet.profilePicUrl)),
-                        ),
-                      );
+                      return Padding(
+                          padding: EdgeInsets.all(16),
+                          child: InkWell(
+                              onTap: () async =>
+                                  await model.navigateToPetDetais(pet, index),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 99999,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Image.network(
+                                      pet.profilePicUrl,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 10, color: Colors.grey)
+                                      ],
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    height: 200,
+                                  ),
+                                  Text(
+                                    pet.name,
+                                    style: GoogleFonts.capriola(
+                                        color: Colors.black, fontSize: 24),
+                                  ),
+                                  Text(
+                                    pet.race,
+                                    style: GoogleFonts.palanquin(
+                                        height: 1,
+                                        color: Colors.black,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              )));
                     },
                   ),
                 ))),
         onModelReady: (model) async => await model.init(),
         viewModelBuilder: () => DashboardViewModel());
+  }
+
+  Container buildNavigationBar(DashboardViewModel model) {
+    return Container(
+        color: Colors.white,
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.yellow,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 20, color: Colors.black.withOpacity(.1))
+                  ]),
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  child: GNav(
+                      gap: 8,
+                      activeColor: Colors.white,
+                      iconSize: 24,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      duration: Duration(milliseconds: 800),
+                      tabBackgroundColor: Colors.grey[800],
+                      tabs: [
+                        GButton(
+                          icon: Icons.home,
+                          text: 'Home',
+                        ),
+                        GButton(
+                          icon: Icons.hearing,
+                          text: 'Likes',
+                        ),
+                        GButton(
+                          icon: Icons.search,
+                          text: 'Search',
+                        ),
+                        GButton(
+                          icon: Icons.supervisor_account,
+                          text: 'Profile',
+                        ),
+                      ],
+                      selectedIndex: model.selectedIndex,
+                      onTabChange: (index) {
+                        model.changeTab(index);
+                      }),
+                ),
+              ),
+            )));
   }
 
   Container buildDrawer(
