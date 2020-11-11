@@ -6,5 +6,5 @@ class R {
 
 class AppColors {
   const AppColors();
-  Color get main => Color.fromARGB(255, 255, 249, 82);
+  Color get main => Color.fromARGB(122, 212, 1, 82);
 }

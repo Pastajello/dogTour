@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:flutter/services.dart';
 import 'app/locator.dart';
 import 'app/router.gr.dart' as AutoRoute;
 
@@ -23,17 +23,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        canvasColor: Colors.transparent,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      initialRoute: AutoRoute.Routes.startupView,
-      onGenerateRoute: AutoRoute.Router().onGenerateRoute,
-      navigatorKey: locator<NavigationService>().navigatorKey,
-    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            canvasColor: Colors.transparent,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          initialRoute: AutoRoute.Routes.startupView,
+          onGenerateRoute: AutoRoute.Router().onGenerateRoute,
+          navigatorKey: locator<NavigationService>().navigatorKey,
+        ));
   }
 
   void signInAnonymously() async {

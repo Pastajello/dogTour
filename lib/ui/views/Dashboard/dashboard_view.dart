@@ -19,8 +19,8 @@ class DashboardView extends StatelessWidget {
               leading: IconButton(
                 onPressed: () => _drawerKey.currentState.openDrawer(),
                 icon: Icon(
-                  Icons.ac_unit,
-                  color: Colors.black,
+                  Icons.menu,
+                  color: Colors.white,
                 ),
               ),
               actions: <Widget>[
@@ -33,7 +33,7 @@ class DashboardView extends StatelessWidget {
                       Icons.add,
                       size: 40,
                     ),
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
               ],
               backgroundColor: R.colors.main,
@@ -67,10 +67,9 @@ class DashboardView extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                            blurRadius: 10, color: Colors.grey)
+                                            blurRadius: 5, color: Colors.grey)
                                       ],
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                     height: 200,
                                   ),
